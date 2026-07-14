@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EchoSpace - Interactive 3D Portfolio</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 EchoSpace</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">☰</div>
+        </div>
+    </nav>
+
+    <!-- ===== LANDING PAGE ===== -->
+    <section id="home" class="section">
+        <div class="overlay-content">
+            <h1 class="glow-text">EchoSpace</h1>
+            <h2>Innovative 3D Web Experiences</h2>
+            <p>Crafting immersive digital experiences through creativity and code.</p>
+            <div class="cta-buttons">
+                <a href="#about" class="btn primary">Meet the Team</a>
+                <a href="#projects" class="btn secondary">View Our Work</a>
+            </div>
+            <div class="interaction-hint">
+                <p>🖱️ Click objects to change color | Drag to rotate | Scroll to zoom | Auto-rotate active</p>
+            </div>
+        </div>
+        <div id="three-container"></div>
+    </section>
+
+    <!-- ===== ABOUT SECTION - 4 MEMBERS IN A ROW ===== -->
+    <section id="about" class="section">
+        <div class="section-content">
+            <h2 class="section-title">👥 About Us</h2>
+            <div class="about-grid about-grid-4">
+                
+                <!-- ===== MEMBER 1: Ismail Bin Esa ===== -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="assets/images/members/ismail.jpg" alt="Ismail Bin Esa" onerror="this.src='https://ui-avatars.com/api/?name=Ismail+Esa&background=3498db&color=fff&size=200'" />
+                    </div>
+                    <h3>Ismail Bin Esa</h3>
+                    <p class="role">Lead Developer</p>
+                    <div class="member-details">
+                        <p><strong>🎓 Education:</strong> Bachelor of Computer Science (Graphics and Multimedia Software) with Honours, UTM</p>
+                        <p><strong>🎯 Interests:</strong> Mobile App Development (Flutter), Web Development, Computer Vision, Interactive Graphics</p>
+                        <p><strong>🏆 Achievements:</strong><br>
+                        • Vice President, Kor SISPA UTM (2024-2025)<br>
+                        • Head of Multimedia Unit, CGMA Interactive Day 2024<br>
+                        • Vice Director, Ascending & Descending Optional Course (2025)</p>
+                        <p><strong>🎯 Aspiration:</strong> To become a skilled software engineer specializing in mobile and web development with expertise in computer vision and multimedia technologies.</p>
+                    </div>
+                </div>
+
+                <!-- ===== MEMBER 2: Izz Haeil bin Hamishamsul ===== -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="assets/images/members/izz.jpg" alt="Izz Haeil bin Hamishamsul" onerror="this.src='https://ui-avatars.com/api/?name=Izz+Haeil&background=e74c3c&color=fff&size=200'" />
+                    </div>
+                    <h3>Izz Haeil bin Hamishamsul</h3>
+                    <p class="role">UI/UX Designer & Developer</p>
+                    <div class="member-details">
+                        <p><strong>🎓 Education:</strong> Bachelor of Computer Science (Graphics and Multimedia Software) with Honours, UTM</p>
+                        <p><strong>🎯 Interests:</strong> Front-End Developer, Web Development, Computer Vision, AI Engineer</p>
+                        <p><strong>🏆 Achievements:</strong><br>
+                        • Protocol Unit, METAVERSE AND XR ADVENTURE (MEXRA '25)<br>
+                        • Logistic Unit, NEW ZEALAND XR TRIP (NEXT'26)<br>
+                        • TOP 5 AWARD i3DC 2026<br>
+                        • GOLD INNOVEX 2026<br>
+                        • UTM GAMES Coach Football Team 2024 : KTDl Representative<br>
+                        • VibeCode with AI: Workshop Trainer</p>
+                        <p><strong>🎯 Aspiration:</strong> To build a successful career in the technology industry by continuously learning, embracing new challenges, and creating impactful software solutions that improve people's lives.</p>
+                    </div>
+                </div>
+
+                <!-- ===== MEMBER 3: Mohamad Zakwan Zuhairie ===== -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="assets/images/members/zakwan.jpg" alt="Mohamad Zakwan Zuhairie" onerror="this.src='https://ui-avatars.com/api/?name=Zakwan+Zuhairie&background=2ecc71&color=fff&size=200'" />
+                    </div>
+                    <h3>Mohamad Zakwan Zuhairie</h3>
+                    <p class="role">Full Stack Developer</p>
+                    <div class="member-details">
+                        <p><strong>🎓 Education:</strong> Bachelor of Computer Science (Graphics and Multimedia Software) with Honours, UTM</p>
+                        <p><strong>🎯 Interests:</strong> Software Development, Computer Graphics, Mixed Reality (MR), Virtual Reality (VR), Artificial Intelligence, Computer Vision, Web and Multimedia Application Development</p>
+                        <p><strong>🏆 Achievements:</strong><br>
+                        • 3rd Place, Kor SUKSIS Southern Zone Marching Competition<br>
+                        • Logistics Unit Committee, Bakti Siswa Perdana<br>
+                        • Head of Department, Gift & Appreciation Unit, CGMA MPG'26<br>
+                        • Technical Unit Committee, CGMA Expedia'26<br>
+                        • Technical Unit Committee, Suksis D'Lebaran'26</p>
+                        <p><strong>🎯 Aspiration:</strong> To become a skilled software engineer specializing in multimedia and interactive technologies while continuously improving expertise in computer graphics, artificial intelligence, and software development to create innovative digital solutions.</p>
+                    </div>
+                </div>
+
+                <!-- ===== MEMBER 4: Nur Aifa Insyirah ===== -->
+                <div class="member-card">
+                    <div class="member-image">
+                        <img src="assets/images/members/aifa.jpg" alt="Nur Aifa Insyirah" onerror="this.src='https://ui-avatars.com/api/?name=Nur+Aifa+Insyirah&background=f39c12&color=fff&size=200'" />
+                    </div>
+                    <h3>Nur Aifa Insyirah</h3>
+                    <p class="role">Developer & Researcher</p>
+                    <div class="member-details">
+                        <p><strong>🎓 Education:</strong> Bachelor of Computer Science (Graphics and Multimedia Software) with Honours, UTM</p>
+                        <p><strong>🎯 Interests:</strong> Image Processing, Machine Learning, Educational Technology, AR/VR</p>
+                        <p><strong>🏆 Achievements:</strong><br>
+                        • Research Publication (2025)<br>
+                        • Dean's List Award (2024)<br>
+                        • Best Student Researcher Award</p>
+                        <p><strong>🎯 Aspiration:</strong> To become a researcher and developer in image processing and educational technology.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS SECTION ===== -->
+    <section id="skills" class="section">
+        <div class="section-content">
+            <h2 class="section-title">⚡ Skills Showcase</h2>
+            <div class="skills-container">
+                <div class="skills-3d-container" id="skills-3d"></div>
+                <div class="skills-list">
+                    <div id="skill-info">
+                        <h3>🎯 Hover over the 3D bars!</h3>
+                        <p>Each bar represents a different skill level</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS SECTION ===== -->
+    <section id="projects" class="section">
+        <div class="section-content">
+            <h2 class="section-title">📁 Our Projects</h2>
+            <div class="project-grid">
+                
+                <!-- ===== MEMBER 1: Ismail Bin Esa - 3 Projects ===== -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/nightmunch.jpg" alt="NightMunch" onerror="this.src='https://via.placeholder.com/400x250/3498db/ffffff?text=NightMunch'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>NightMunch - Late-Night Campus Burger Delivery System</h3>
+                        <p>A complete web-based ordering system for late-night burger delivery on campus with customer portal, admin dashboard, and rider interface.</p>
+                        <div class="tech-tags">
+                            <span>PHP</span>
+                            <span>MySQL</span>
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>AJAX</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Ismail Bin Esa</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/campuscloset.jpg" alt="Campus Closet" onerror="this.src='https://via.placeholder.com/400x250/2980b9/ffffff?text=Campus+Closet'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Campus Closet - Peer-to-Peer Rental App</h3>
+                        <p>A mobile application enabling students to rent clothing items from each other with Firebase Authentication, Realtime Database, and high-fidelity UI/UX prototypes.</p>
+                        <div class="tech-tags">
+                            <span>Flutter</span>
+                            <span>Firebase</span>
+                            <span>Figma</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Ismail Bin Esa</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/graphics.jpg" alt="Graphics Processing" onerror="this.src='https://via.placeholder.com/400x250/2471a3/ffffff?text=Graphics+Processing'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Graphics & Image Processing Projects</h3>
+                        <p>Interactive 3D graphics using OpenGL graphics pipeline with image processing techniques including noise reduction, image restoration, and quality evaluation.</p>
+                        <div class="tech-tags">
+                            <span>C++</span>
+                            <span>OpenGL</span>
+                            <span>GLEW</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Ismail Bin Esa</p>
+                    </div>
+                </div>
+
+                <!-- ===== MEMBER 2: Izz Haeil bin Hamishamsul - 3 Projects ===== -->
+                
+                <!-- Project 2.1: Mobivia -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/mobivia.jpg" alt="Mobivia" onerror="this.src='https://via.placeholder.com/400x250/e74c3c/ffffff?text=Mobivia'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Mobivia - AI-Based Home Mobility Assessment and Telehealth System</h3>
+                        <p>An AI-powered mobility assessment platform designed to support home-based rehabilitation and early fall-risk screening for elderly and rehabilitation patients. Leverages computer vision to analyze body posture and movement for accessible and low-cost mobility monitoring.</p>
+                        <div class="tech-tags">
+                            <span>Python</span>
+                            <span>OpenCV</span>
+                            <span>MediaPipe</span>
+                            <span>Computer Vision</span>
+                            <span>3D Pose Estimation</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Izz Haeil bin Hamishamsul</p>
+                    </div>
+                </div>
+
+                <!-- Project 2.2: Gesture-Controlled Hologram Assistant -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/hologram.jpg" alt="Gesture-Controlled Hologram" onerror="this.src='https://via.placeholder.com/400x250/c0392b/ffffff?text=Hologram+Assistant'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Gesture-Controlled Hologram Assistant - AI-Powered Interactive Holographic System</h3>
+                        <p>A real-time interactive hologram system enabling users to control a 3D avatar using hand gestures without keyboard, mouse, or touch input. Built with Unity and Google MediaPipe for immersive controller-free user experience.</p>
+                        <div class="tech-tags">
+                            <span>Unity 6</span>
+                            <span>C#</span>
+                            <span>Google MediaPipe</span>
+                            <span>Computer Vision</span>
+                            <span>3D Graphics</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Izz Haeil bin Hamishamsul</p>
+                    </div>
+                </div>
+
+                <!-- Project 2.3: Graphics & Image Processing -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/graphics3d.jpg" alt="3D Graphics" onerror="this.src='https://via.placeholder.com/400x250/a93226/ffffff?text=3D+Graphics'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Interactive 3D Charmander Simulation - OpenGL Graphics Application</h3>
+                        <p>An interactive 3D graphics application featuring a fully modeled and animated Charmander character within a jungle environment. Demonstrates 3D modeling, lighting, animation, camera control, and user interaction using OpenGL.</p>
+                        <div class="tech-tags">
+                            <span>C++</span>
+                            <span>OpenGL</span>
+                            <span>GLUT/GLU</span>
+                            <span>Windows API</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Izz Haeil bin Hamishamsul</p>
+                    </div>
+                </div>
+
+                <!-- ===== MEMBER 3: Mohamad Zakwan Zuhairie - 3 Projects ===== -->
+                
+                <!-- Project 3.1: Bowling Battalion -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/bowling.jpg" alt="Bowling Battalion" onerror="this.src='https://via.placeholder.com/400x250/2ecc71/ffffff?text=Bowling+Battalion'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Bowling Battalion - Virtual Reality Bowling Simulation</h3>
+                        <p>A VR-based bowling simulation developed using Unity and XR Interaction Toolkit. Provides an immersive bowling experience by allowing users to interact with virtual objects using VR controllers with physics-based ball movement.</p>
+                        <div class="tech-tags">
+                            <span>Unity 6.3</span>
+                            <span>C#</span>
+                            <span>XR Interaction Toolkit</span>
+                            <span>Virtual Reality</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Mohamad Zakwan Zuhairie</p>
+                    </div>
+                </div>
+
+                <!-- Project 3.2: EasyCar.my -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/easycar.jpg" alt="EasyCar.my" onerror="this.src='https://via.placeholder.com/400x250/27ae60/ffffff?text=EasyCar.my'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>EasyCar.my - AI-Assisted Used Car Marketplace Platform</h3>
+                        <p>A web-based used car marketplace system allowing users to advertise, manage, and browse vehicle listings. Includes an AI chatbot assistant to provide users with guidance related to buying and selling used cars.</p>
+                        <div class="tech-tags">
+                            <span>PHP</span>
+                            <span>MySQL</span>
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>REST API</span>
+                            <span>AI API Integration</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Mohamad Zakwan Zuhairie</p>
+                    </div>
+                </div>
+
+                <!-- Project 3.3: Graphics & Image Processing -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/graphicsprocessing.jpg" alt="Graphics Processing" onerror="this.src='https://via.placeholder.com/400x250/229954/ffffff?text=Graphics+Processing'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>Graphics & Image Processing Projects</h3>
+                        <p>Projects involving computer graphics and digital image processing. Applied graphics programming concepts, image enhancement techniques, and computer vision to process and analyze digital images.</p>
+                        <div class="tech-tags">
+                            <span>C++</span>
+                            <span>OpenGL</span>
+                            <span>GLEW</span>
+                            <span>Python</span>
+                            <span>OpenCV</span>
+                            <span>NumPy</span>
+                        </div>
+                        <p class="developer-credit">👨‍💻 Developed by: Mohamad Zakwan Zuhairie</p>
+                    </div>
+                </div>
+
+                <!-- ===== MEMBER 4: Nur Aifa Insyirah - 3 Projects ===== -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/snappic.jpg" alt="SnapPic" onerror="this.src='https://via.placeholder.com/400x250/f39c12/ffffff?text=SnapPic'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>SnapPic: Image Processing Application</h3>
+                        <p>A comprehensive photo editor built with OpenCV and Python featuring a history window, image loading/saving, and advanced manipulation tools including blurring, grayscale conversion, lighting adjustment, background removal, and resizing.</p>
+                        <div class="tech-tags">
+                            <span>Python</span>
+                            <span>OpenCV</span>
+                            <span>NumPy</span>
+                        </div>
+                        <p class="developer-credit">👩‍💻 Developed by: Nur Aifa Insyirah</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/emomaze.jpg" alt="EMOmaze Room" onerror="this.src='https://via.placeholder.com/400x250/e67e22/ffffff?text=EMOmaze+Room'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>EMOmaze Room: Multiplayer Facial Expression Gameplay</h3>
+                        <p>A multiplayer game developed in Unity and C# where players navigate through mazes using facial expressions with real-time emotion recognition and immersive 3D environments.</p>
+                        <div class="tech-tags">
+                            <span>Unity</span>
+                            <span>C#</span>
+                            <span>Photon</span>
+                        </div>
+                        <p class="developer-credit">👩‍💻 Developed by: Nur Aifa Insyirah</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/images/projects/arlearningpro.jpg" alt="AR Learning Application" onerror="this.src='https://via.placeholder.com/400x250/d35400/ffffff?text=AR+Learning'" />
+                    </div>
+                    <div class="project-content">
+                        <h3>AR Learning Application for Interactive Alphabet & English Vocabulary in Kindergarten</h3>
+                        <p>An interactive AR learning application developed with Unity, Vuforia, and Text-to-Speech for kindergarten students to learn alphabet and English vocabulary through engaging 3D visualizations and audio feedback.</p>
+                        <div class="tech-tags">
+                            <span>Unity</span>
+                            <span>Vuforia</span>
+                            <span>TextToSpeech</span>
+                            <span>AR</span>
+                        </div>
+                        <p class="developer-credit">👩‍💻 Developed by: Nur Aifa Insyirah</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="contact" class="section">
+        <div class="section-content">
+            <h2 class="section-title">📧 Contact Us</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Connect!</h3>
+                    <div class="contact-item">
+                        <span class="icon">📧</span>
+                        <p>team@echospace.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">📱</span>
+                        <p>+60 12-345 6789</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon">📍</span>
+                        <p>Universiti Teknologi Malaysia, Johor</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">YouTube</a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" placeholder="Subject" />
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Send Message</button>
+                    <div id="formStatus"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2026 EchoSpace. All rights reserved.</p>
+        <p style="font-size:0.8rem;color:#444;">Developed by: Ismail, Izz, Zakwan &amp; Aifa</p>
+    </footer>
+
+    <!-- ===== THREE.JS SCRIPTS ===== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
