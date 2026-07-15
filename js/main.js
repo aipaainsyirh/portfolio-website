@@ -71,81 +71,29 @@ function initMobileMenu() {
     }
 }
 
-// SMOOTH SCROLL - Works with href="#section" links
+
 function initSmoothScroll() {
-    console.log('🔗 Initializing smooth scroll...');
     
-    // Get ALL links that have href starting with #
-    const allLinks = document.querySelectorAll('a[href^="#"]');
-    console.log(`📌 Found ${allLinks.length} anchor links`);
+    const links = document.querySelectorAll('a[href^="#"]');
     
-    allLinks.forEach((link) => {
-        // Skip links that are just "#" (like the YouTube link)
-        const href = link.getAttribute('href');
-        if (href === '#') return;
+    links.forEach(link => {
+        
+        if (link.getAttribute('href') === '#') return;
         
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
             const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
+            const target = document.getElementById(targetId);
             
-            if (targetSection) {
-                // Get navbar height
+            if (target) {
                 const navbar = document.querySelector('.navbar');
                 const navHeight = navbar ? navbar.offsetHeight : 70;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
                 
-                // Calculate position
-                const rect = targetSection.getBoundingClientRect();
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const targetPosition = rect.top + scrollTop - navHeight;
-                
-                console.log(`📍 Scrolling to: ${targetId}`);
-                
-                // Smooth scroll
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
-                });
-                
-                // Update active nav link
-                document.querySelectorAll('.nav-links a').forEach(navLink => {
-                    navLink.classList.remove('active');
-                });
-                
-                // Find and activate the matching nav link
-                document.querySelectorAll('.nav-links a[href="#' + targetId + '"]').forEach(navLink => {
-                    navLink.classList.add('active');
-                });
-                
-                // Close mobile menu
-                const navLinks = document.querySelector('.nav-links');
-                if (navLinks) {
-                    navLinks.classList.remove('active');
-                }
-            } else {
-                console.warn(`❌ Section not found: ${targetId}`);
-            }
-        });
-    });
-    
-    // Update active nav link on scroll
-    window.addEventListener('scroll', function() {
-        const sections = document.querySelectorAll('.section');
-        const navLinks = document.querySelectorAll('.nav-links a');
-        const scrollPosition = window.pageYOffset + 150;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + sectionId) {
-                        link.classList.add('active');
-                    }
                 });
             }
         });

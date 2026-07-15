@@ -56,14 +56,6 @@ body {
     gap: 30px;
 }
 
-
-/* ===== ACTIVE NAV LINK ===== */
-.nav-links a.active {
-    color: #5b8def !important;
-    border-bottom: 2px solid #5b8def;
-    padding-bottom: 4px;
-}
-
 .nav-links a {
     color: #d0d0ff;
     text-decoration: none;
@@ -78,8 +70,10 @@ body {
     color: #5b8def;
 }
 
-.btn[href^="#"] {
-    cursor: pointer;
+.nav-links a.active {
+    color: #5b8def !important;
+    border-bottom: 2px solid #5b8def;
+    padding-bottom: 4px;
 }
 
 .hamburger {
@@ -262,6 +256,11 @@ footer {
 .btn.small {
     padding: 8px 20px;
     font-size: 0.85rem;
+}
+
+/* CTA buttons with anchor links */
+.btn[href^="#"] {
+    cursor: pointer;
 }
 
 /* ===== ABOUT US ===== */
@@ -586,6 +585,17 @@ footer {
         padding: 20px;
         text-align: center;
         gap: 15px;
+        border-bottom: 1px solid rgba(91, 141, 239, 0.1);
+    }
+    
+    .nav-links.active a {
+        padding: 10px 0;
+        border-bottom: none;
+    }
+    
+    .nav-links.active a.active {
+        border-bottom: 2px solid #5b8def;
+        padding-bottom: 8px;
     }
     
     .about-grid-4 {
