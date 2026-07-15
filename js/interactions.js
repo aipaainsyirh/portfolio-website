@@ -1,8 +1,6 @@
-
 //INTERACTIONS
 // Mouse: Click, Hover, Right-click
 // Keyboard: Space, R, C, H
-git 
 
 import * as THREE from 'three';
 

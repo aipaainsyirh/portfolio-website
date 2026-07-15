@@ -1,4 +1,3 @@
-
 //  ANIMATIONS
 
 let time = 0;
@@ -27,6 +26,7 @@ export function initAnimations(allObjects) {
             } else if (obj.type === 'galaxy') {
                 if (obj.stars) obj.stars.rotation.y += 0.00005;
                 if (obj.nebula) obj.nebula.rotation.y += 0.00008;
+                if (obj.distantStars) obj.distantStars.rotation.y += 0.00003;
             }
         });
     }

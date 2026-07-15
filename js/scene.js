@@ -1,7 +1,4 @@
-
 // SCENE SETUP
-
-
 import * as THREE from 'three';
 
 let scene, camera, renderer;

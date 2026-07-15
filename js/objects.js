@@ -1,4 +1,3 @@
-
 // 3D OBJECTS 
 
 
@@ -116,6 +115,7 @@ function createRubikTexture() {
 
 
 function createGalaxyBackground(scene) {
+    // Main galaxy stars
     const starGeometry = new THREE.BufferGeometry();
     const count = 25000;
     const positions = new Float32Array(count * 3);
@@ -158,7 +158,7 @@ function createGalaxyBackground(scene) {
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
     
-    // Nebula
+    // Nebula - colorful dust clouds
     const nebulaGeometry = new THREE.BufferGeometry();
     const nebulaCount = 8000;
     const nebulaPos = new Float32Array(nebulaCount * 3);
@@ -196,7 +196,32 @@ function createGalaxyBackground(scene) {
     const nebula = new THREE.Points(nebulaGeometry, nebulaMaterial);
     scene.add(nebula);
     
-    allObjects.push({ type: 'galaxy', stars, nebula });
+    // Extra distant stars for depth
+    const distantGeo = new THREE.BufferGeometry();
+    const distantCount = 5000;
+    const distantPos = new Float32Array(distantCount * 3);
+    for (let i = 0; i < distantCount; i++) {
+        const r = 100 + Math.random() * 80;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        distantPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+        distantPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.3;
+        distantPos[i * 3 + 2] = r * Math.cos(phi);
+    }
+    distantGeo.setAttribute('position', new THREE.BufferAttribute(distantPos, 3));
+    const distantMat = new THREE.PointsMaterial({
+        color: 0x88aaff,
+        size: 0.25,
+        transparent: true,
+        opacity: 0.3,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        sizeAttenuation: true
+    });
+    const distantStars = new THREE.Points(distantGeo, distantMat);
+    scene.add(distantStars);
+    
+    allObjects.push({ type: 'galaxy', stars, nebula, distantStars });
 }
 
 

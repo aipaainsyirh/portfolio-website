@@ -1,9 +1,9 @@
-
 import { initScene } from './scene.js';
 import { initLighting } from './lighting.js';
 import { createAllObjects } from './objects.js';
 import { initAnimations } from './animations.js';
 import { initInteractions } from './interactions.js';
+import { createSkillsBars } from './skillsBars.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 
@@ -93,6 +93,12 @@ function initThreeJS() {
     
     const interactionState = initInteractions(camera, renderer, allMeshes);
     const animationState = initAnimations(allObjects);
+    
+    // Initialize skills bars in the skills section
+    const skillsContainer = document.getElementById('skills-3d');
+    if (skillsContainer) {
+        createSkillsBars(skillsContainer);
+    }
     
     return {
         scene,

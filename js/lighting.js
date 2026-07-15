@@ -1,4 +1,3 @@
-
 // LIGHTING 
 
 import * as THREE from 'three';
@@ -21,7 +20,7 @@ export function initLighting(scene) {
     fillLight.position.set(-5, 0, 5);
     scene.add(fillLight);
     
-    console.log('💡 Lighting: Ambient + Directional');
+    console.log('Lighting: Ambient + Directional');
     
     return { ambientLight, directionalLight, fillLight };
 }
