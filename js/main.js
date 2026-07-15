@@ -4,6 +4,7 @@ import { createAllObjects } from './objects.js';
 import { initAnimations } from './animations.js';
 import { initInteractions } from './interactions.js';
 import { createSkillsBars } from './skillsBars.js';
+import { initAboutThreeJS, selectMember } from './aboutThree.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 
@@ -71,6 +72,64 @@ function initMobileMenu() {
     }
 }
 
+// Smooth scroll without hash - using scrollIntoView
+function initSmoothScroll() {
+    const allLinks = document.querySelectorAll('a[href^="#"]');
+    
+    allLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update active nav link
+                const sectionName = targetId.substring(1);
+                document.querySelectorAll('.nav-links a').forEach(navLink => {
+                    navLink.classList.remove('active');
+                    if (navLink.getAttribute('data-section') === sectionName) {
+                        navLink.classList.add('active');
+                    }
+                });
+                
+                // Close mobile menu if open
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks) {
+                    navLinks.classList.remove('active');
+                }
+            }
+        });
+    });
+    
+    // Update active nav link on scroll
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const scrollPosition = window.pageYOffset + 150;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+}
+
+
 // THREE.JS INITIALIZATION
 
 function initThreeJS() {
@@ -98,6 +157,18 @@ function initThreeJS() {
     if (skillsContainer) {
         createSkillsBars(skillsContainer);
     }
+    
+    // Initialize About Us ThreeJS Showcase
+    initAboutThreeJS();
+    
+    // Bind member tabs selection
+    const tabs = document.querySelectorAll('.member-tab-btn');
+    tabs.forEach((tab, idx) => {
+        tab.addEventListener('click', () => {
+            selectMember(idx);
+        });
+    });
+    window.selectAboutMember = selectMember;
     
     return {
         scene,
@@ -146,6 +217,7 @@ function init() {
     // Initialize UI components
     initScrollAnimations();
     initMobileMenu();
+    initSmoothScroll();
     initContactForm();
     
     // Initialize Three.js
