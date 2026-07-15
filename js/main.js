@@ -71,36 +71,6 @@ function initMobileMenu() {
     }
 }
 
-
-function initSmoothScroll() {
-    
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-        
-        if (link.getAttribute('href') === '#') return;
-        
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href').substring(1);
-            const target = document.getElementById(targetId);
-            
-            if (target) {
-                const navbar = document.querySelector('.navbar');
-                const navHeight = navbar ? navbar.offsetHeight : 70;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-
 // THREE.JS INITIALIZATION
 
 function initThreeJS() {
@@ -176,7 +146,6 @@ function init() {
     // Initialize UI components
     initScrollAnimations();
     initMobileMenu();
-    initSmoothScroll();
     initContactForm();
     
     // Initialize Three.js
