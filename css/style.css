@@ -56,15 +56,30 @@ body {
     gap: 30px;
 }
 
+
+/* ===== ACTIVE NAV LINK ===== */
+.nav-links a.active {
+    color: #5b8def !important;
+    border-bottom: 2px solid #5b8def;
+    padding-bottom: 4px;
+}
+
 .nav-links a {
     color: #d0d0ff;
     text-decoration: none;
-    transition: color 0.3s;
+    transition: color 0.3s, border-bottom 0.3s;
     font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
 }
 
 .nav-links a:hover {
     color: #5b8def;
+}
+
+.btn[href^="#"] {
+    cursor: pointer;
 }
 
 .hamburger {

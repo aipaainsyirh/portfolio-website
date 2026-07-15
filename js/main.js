@@ -71,27 +71,38 @@ function initMobileMenu() {
     }
 }
 
-// Smooth scroll without hash - using scrollIntoView
+// SMOOTH SCROLL - Works with href="#section" links
 function initSmoothScroll() {
-    // Get all links that have data-section attribute
-    const allLinks = document.querySelectorAll('a[data-section]');
+    console.log('🔗 Initializing smooth scroll...');
     
-    allLinks.forEach(link => {
+    // Get ALL links that have href starting with #
+    const allLinks = document.querySelectorAll('a[href^="#"]');
+    console.log(`📌 Found ${allLinks.length} anchor links`);
+    
+    allLinks.forEach((link) => {
+        // Skip links that are just "#" (like the YouTube link)
+        const href = link.getAttribute('href');
+        if (href === '#') return;
+        
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
             
-            const sectionId = this.getAttribute('data-section');
-            const targetSection = document.getElementById(sectionId);
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Get navbar height for offset
+                // Get navbar height
                 const navbar = document.querySelector('.navbar');
                 const navHeight = navbar ? navbar.offsetHeight : 70;
                 
-                // Use scrollIntoView with offset
-                const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                // Calculate position
+                const rect = targetSection.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const targetPosition = rect.top + scrollTop - navHeight;
                 
+                console.log(`📍 Scrolling to: ${targetId}`);
+                
+                // Smooth scroll
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -101,15 +112,19 @@ function initSmoothScroll() {
                 document.querySelectorAll('.nav-links a').forEach(navLink => {
                     navLink.classList.remove('active');
                 });
-                this.classList.add('active');
                 
-                // Close mobile menu if open
+                // Find and activate the matching nav link
+                document.querySelectorAll('.nav-links a[href="#' + targetId + '"]').forEach(navLink => {
+                    navLink.classList.add('active');
+                });
+                
+                // Close mobile menu
                 const navLinks = document.querySelector('.nav-links');
                 if (navLinks) {
                     navLinks.classList.remove('active');
                 }
             } else {
-                console.warn('Section not found:', sectionId);
+                console.warn(`❌ Section not found: ${targetId}`);
             }
         });
     });
@@ -128,7 +143,7 @@ function initSmoothScroll() {
             if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    if (link.getAttribute('data-section') === sectionId) {
+                    if (link.getAttribute('href') === '#' + sectionId) {
                         link.classList.add('active');
                     }
                 });
