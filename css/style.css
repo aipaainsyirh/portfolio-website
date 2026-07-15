@@ -17,6 +17,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #ffffff;
     overflow-x: hidden;
+    background: linear-gradient(180deg, #0a0a2e 0%, #0d0d3d 20%, #0a0a2e 40%, #0a0a0a 70%, #0a0a0a 100%);
+    background-attachment: fixed;
 }
 
 /* ===== NAVIGATION ===== */
@@ -24,11 +26,11 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(10, 10, 30, 0.92);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(52, 152, 219, 0.15);
 }
 
 .nav-container {
@@ -43,7 +45,7 @@ body {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    background: linear-gradient(45deg, #3498db, #2ecc71);
+    background: linear-gradient(45deg, #5b8def, #2ecc71);
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -55,21 +57,21 @@ body {
 }
 
 .nav-links a {
-    color: #ffffff;
+    color: #d0d0ff;
     text-decoration: none;
     transition: color 0.3s;
     font-size: 0.95rem;
 }
 
 .nav-links a:hover {
-    color: #3498db;
+    color: #5b8def;
 }
 
 .hamburger {
     display: none;
     font-size: 1.8rem;
     cursor: pointer;
-    color: #fff;
+    color: #d0d0ff;
 }
 
 /* ===== THREE.JS CONTAINER ===== */
@@ -80,15 +82,15 @@ body {
     width: 100vw !important;
     height: 100vh !important;
     z-index: 0 !important;
-    background: #0a0a0a !important;
+    background: transparent !important;
     overflow: hidden !important;
     pointer-events: auto !important;
 }
 
 #three-container canvas {
+    display: block !important;
     width: 100% !important;
     height: 100% !important;
-    display: block !important;
     pointer-events: auto !important;
 }
 
@@ -118,11 +120,12 @@ footer {
     max-width: 1400px;
     width: 100%;
     margin: 0 auto;
-    background: rgba(10, 10, 10, 0.75);
-    backdrop-filter: blur(15px);
+    background: rgba(10, 10, 40, 0.7);
+    backdrop-filter: blur(12px);
     border-radius: 20px;
     padding: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(91, 141, 239, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* ===== LANDING PAGE ===== */
@@ -138,20 +141,22 @@ footer {
     backdrop-filter: none;
     border: none;
     padding: 0;
+    box-shadow: none;
 }
 
 .overlay-content {
     text-align: center;
     max-width: 800px;
     padding: 40px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(10, 10, 40, 0.7);
     border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(91, 141, 239, 0.15);
     margin: 0 20px;
     position: relative;
     z-index: 2;
     pointer-events: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .overlay-content h1 {
@@ -160,27 +165,27 @@ footer {
 }
 
 .glow-text {
-    text-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
+    text-shadow: 0 0 30px rgba(91, 141, 239, 0.4);
 }
 
 .overlay-content h2 {
     font-size: 1.8rem;
-    color: #3498db;
+    color: #5b8def;
     margin-bottom: 15px;
 }
 
 .overlay-content p {
     font-size: 1.1rem;
     margin-bottom: 20px;
-    color: #b0b0b0;
+    color: #b0b0d0;
 }
 
 .interaction-hint {
     margin-top: 20px;
     padding: 10px 20px;
-    background: rgba(52, 152, 219, 0.1);
+    background: rgba(91, 141, 239, 0.1);
     border-radius: 10px;
-    border: 1px solid rgba(52, 152, 219, 0.2);
+    border: 1px solid rgba(91, 141, 239, 0.2);
 }
 
 .interaction-hint p {
@@ -201,7 +206,7 @@ footer {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 40px;
-    background: linear-gradient(45deg, #3498db, #2ecc71);
+    background: linear-gradient(45deg, #5b8def, #2ecc71);
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -219,23 +224,23 @@ footer {
 }
 
 .btn.primary {
-    background: linear-gradient(45deg, #3498db, #2ecc71);
+    background: linear-gradient(45deg, #5b8def, #2ecc71);
     color: white;
 }
 
 .btn.primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 10px 30px rgba(91, 141, 239, 0.3);
 }
 
 .btn.secondary {
     background: transparent;
     color: white;
-    border: 2px solid #3498db;
+    border: 2px solid #5b8def;
 }
 
 .btn.secondary:hover {
-    background: #3498db;
+    background: #5b8def;
     transform: translateY(-3px);
 }
 
@@ -245,7 +250,6 @@ footer {
 }
 
 /* ===== ABOUT US ===== */
-
 .about-grid {
     display: grid;
     gap: 30px;
@@ -256,18 +260,19 @@ footer {
 }
 
 .member-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(91, 141, 239, 0.08);
     pointer-events: auto;
 }
 
 .member-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(91, 141, 239, 0.2);
 }
 
 .member-image {
@@ -276,7 +281,7 @@ footer {
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto 12px;
-    border: 3px solid #3498db;
+    border: 3px solid #5b8def;
 }
 
 .member-image img {
@@ -292,7 +297,7 @@ footer {
 }
 
 .member-card .role {
-    color: #3498db;
+    color: #5b8def;
     font-weight: 600;
     margin-bottom: 10px;
     font-size: 0.8rem;
@@ -305,7 +310,7 @@ footer {
 
 .member-details p {
     margin-bottom: 6px;
-    color: #b0b0b0;
+    color: #b0b0d0;
     line-height: 1.5;
 }
 
@@ -324,7 +329,7 @@ footer {
 #skills-3d {
     height: 420px;
     border-radius: 15px;
-    background: rgba(0, 0, 0, 0.3);
+    background: transparent;
     overflow: hidden;
     position: relative;
 }
@@ -346,11 +351,11 @@ footer {
 #skill-info h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #3498db;
+    color: #5b8def;
 }
 
 #skill-info p {
-    color: #b0b0b0;
+    color: #b0b0d0;
 }
 
 #skill-detail {
@@ -365,17 +370,18 @@ footer {
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(91, 141, 239, 0.08);
     pointer-events: auto;
 }
 
 .project-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(91, 141, 239, 0.2);
 }
 
 .project-image {
@@ -402,11 +408,11 @@ footer {
 .project-content h3 {
     font-size: 1.1rem;
     margin-bottom: 8px;
-    color: #3498db;
+    color: #5b8def;
 }
 
 .project-content p {
-    color: #b0b0b0;
+    color: #b0b0d0;
     margin-bottom: 12px;
     line-height: 1.5;
     font-size: 0.9rem;
@@ -420,8 +426,8 @@ footer {
 }
 
 .tech-tags span {
-    background: rgba(52, 152, 219, 0.2);
-    color: #3498db;
+    background: rgba(91, 141, 239, 0.15);
+    color: #5b8def;
     padding: 3px 10px;
     border-radius: 20px;
     font-size: 0.7rem;
@@ -470,12 +476,12 @@ footer {
     text-decoration: none;
     padding: 8px 20px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     transition: background 0.3s;
 }
 
 .social-link:hover {
-    background: #3498db;
+    background: #5b8def;
 }
 
 .contact-form {
@@ -489,7 +495,7 @@ footer {
     width: 100%;
     padding: 12px 15px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(91, 141, 239, 0.15);
     border-radius: 10px;
     color: #ffffff;
     font-size: 1rem;
@@ -499,7 +505,7 @@ footer {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: #5b8def;
 }
 
 .form-group textarea {
@@ -516,11 +522,11 @@ footer {
 footer {
     text-align: center;
     padding: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(91, 141, 239, 0.08);
     color: #666;
     position: relative;
     z-index: 1;
-    background: rgba(10, 10, 10, 0.8);
+    background: rgba(10, 10, 30, 0.8);
     backdrop-filter: blur(10px);
     pointer-events: auto;
 }
@@ -561,7 +567,7 @@ footer {
         top: 70px;
         left: 0;
         width: 100%;
-        background: rgba(10, 10, 10, 0.98);
+        background: rgba(10, 10, 30, 0.98);
         padding: 20px;
         text-align: center;
         gap: 15px;

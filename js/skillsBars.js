@@ -39,7 +39,7 @@ const skillData = [
 
 // Colors for members
 const memberColors = [
-    0x3498db, // blue
+    0x5b8def, // blue
     0x2ecc71, // green
     0xe74c3c, // red
     0xf1c40f  // gold
@@ -50,139 +50,72 @@ const shapeTypes = ['sphere', 'octahedron', 'dodecahedron', 'torus', 'cone'];
 
 let hoveredObject = null;
 
-// Create galaxy background for skills section
-function createGalaxyBackground(scene) {
-    // Main galaxy stars
-    const starGeometry = new THREE.BufferGeometry();
-    const count = 10000;
+// Create colorful background particles for skills section
+function createBackgroundParticles(scene) {
+    const count = 500;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
-        const radius = 20 + Math.random() * 35;
+        const radius = 8 + Math.random() * 15;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos((Math.random() * 2) - 1);
 
         positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.5;
+        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.3;
         positions[i * 3 + 2] = radius * Math.cos(phi);
 
-        const colorChoice = Math.random();
-        let color;
-        if (colorChoice < 0.6) color = new THREE.Color(0xffffff);
-        else if (colorChoice < 0.8) color = new THREE.Color(0x88ccff);
-        else if (colorChoice < 0.92) color = new THREE.Color(0xffdd88);
-        else color = new THREE.Color(0xff8844);
-
+        const color = new THREE.Color().setHSL(0.6 + Math.random() * 0.3, 0.6, 0.3 + Math.random() * 0.3);
         colors[i * 3] = color.r;
         colors[i * 3 + 1] = color.g;
         colors[i * 3 + 2] = color.b;
+        
+        sizes[i] = 0.02 + Math.random() * 0.06;
     }
 
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    const starMaterial = new THREE.PointsMaterial({
-        size: 0.08,
+    const material = new THREE.PointsMaterial({
+        size: 0.05,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.6,
         blending: THREE.AdditiveBlending,
         sizeAttenuation: true,
         depthWrite: false
     });
 
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-    
-    // Nebula - colorful dust clouds
-    const nebulaGeometry = new THREE.BufferGeometry();
-    const nebulaCount = 4000;
-    const nebulaPos = new Float32Array(nebulaCount * 3);
-    const nebulaColors = new Float32Array(nebulaCount * 3);
-
-    for (let i = 0; i < nebulaCount; i++) {
-        const radius = 12 + Math.random() * 28;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
-
-        nebulaPos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        nebulaPos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.4;
-        nebulaPos[i * 3 + 2] = radius * Math.cos(phi);
-
-        const hue = 0.6 + Math.random() * 0.35;
-        const color = new THREE.Color().setHSL(hue, 0.8, 0.12 + Math.random() * 0.15);
-        nebulaColors[i * 3] = color.r;
-        nebulaColors[i * 3 + 1] = color.g;
-        nebulaColors[i * 3 + 2] = color.b;
-    }
-
-    nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
-    nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
-
-    const nebulaMaterial = new THREE.PointsMaterial({
-        size: 0.35,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.12,
-        blending: THREE.AdditiveBlending,
-        sizeAttenuation: true,
-        depthWrite: false
-    });
-
-    const nebula = new THREE.Points(nebulaGeometry, nebulaMaterial);
-    scene.add(nebula);
-    
-    // Extra distant stars for depth
-    const distantGeo = new THREE.BufferGeometry();
-    const distantCount = 3000;
-    const distantPos = new Float32Array(distantCount * 3);
-    for (let i = 0; i < distantCount; i++) {
-        const r = 45 + Math.random() * 40;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
-        distantPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-        distantPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.3;
-        distantPos[i * 3 + 2] = r * Math.cos(phi);
-    }
-    distantGeo.setAttribute('position', new THREE.BufferAttribute(distantPos, 3));
-    const distantMat = new THREE.PointsMaterial({
-        color: 0x88aaff,
-        size: 0.12,
-        transparent: true,
-        opacity: 0.25,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-        sizeAttenuation: true
-    });
-    const distantStars = new THREE.Points(distantGeo, distantMat);
-    scene.add(distantStars);
-    
-    return { stars, nebula, distantStars };
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    return particles;
 }
 
 export function createSkillsBars(container) {
     // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0a0a);
+    scene.background = new THREE.Color(0x0a0a2e);
     
-    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 50);
     camera.position.set(0, 4, 12);
     camera.lookAt(0, 1.5, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x0a0a0a, 1);
+    renderer.setClearColor(0x0a0a2e, 1);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Add galaxy background
-    const galaxy = createGalaxyBackground(scene);
+    // Add background particles
+    const bgParticles = createBackgroundParticles(scene);
 
     // Lights - brighter
-    const ambient = new THREE.AmbientLight(0x6688aa, 0.7);
+    const ambient = new THREE.AmbientLight(0x4466aa, 0.8);
     scene.add(ambient);
     const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
     dirLight.position.set(8, 12, 10);
@@ -340,7 +273,7 @@ export function createSkillsBars(container) {
 
     // Add decorative floating rings around the whole group - brighter
     const ringMat2 = new THREE.MeshBasicMaterial({
-        color: 0x3498db,
+        color: 0x5b8def,
         transparent: true,
         opacity: 0.08,
         wireframe: true,
@@ -406,7 +339,7 @@ export function createSkillsBars(container) {
                     'cone': '🔺'
                 };
                 detailEl.innerHTML = `
-                    <div style="background:rgba(0,0,0,0.8);padding:14px 20px;border-radius:12px;border:2px solid ${colorStyle};backdrop-filter:blur(5px);">
+                    <div style="background:rgba(10,10,40,0.9);padding:14px 20px;border-radius:12px;border:2px solid ${colorStyle};backdrop-filter:blur(5px);">
                         <div style="font-size:1.3rem;margin-bottom:2px;">
                             ${shapeIcons[data.shapeType] || '💎'} 
                             <strong style="color:#ffffff;">${data.skillName}</strong>
@@ -420,7 +353,6 @@ export function createSkillsBars(container) {
                     </div>
                 `;
             }
-            // Keep the info text visible but with a subtle change
             if (infoEl) {
                 infoEl.style.opacity = '0.6';
                 infoEl.style.transform = 'scale(0.98)';
@@ -475,10 +407,10 @@ export function createSkillsBars(container) {
         
         controls.update();
         
-        // Rotate galaxy background slowly
-        if (galaxy.stars) galaxy.stars.rotation.y += 0.0003;
-        if (galaxy.nebula) galaxy.nebula.rotation.y += 0.0005;
-        if (galaxy.distantStars) galaxy.distantStars.rotation.y += 0.0002;
+        // Rotate background particles slowly
+        if (bgParticles) {
+            bgParticles.rotation.y += 0.0005;
+        }
         
         // Animate each object
         objects.forEach((obj, i) => {

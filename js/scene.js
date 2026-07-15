@@ -1,11 +1,13 @@
 // SCENE SETUP
+
+
 import * as THREE from 'three';
 
 let scene, camera, renderer;
 
 export function initScene() {
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0a0a);
+    scene.background = new THREE.Color(0x0a0a2e);
     
     camera = new THREE.PerspectiveCamera(
         60,
@@ -27,6 +29,7 @@ export function initScene() {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
+    renderer.setClearColor(0x0a0a2e, 0);
     container.appendChild(renderer.domElement);
     
     return { scene, camera, renderer };
