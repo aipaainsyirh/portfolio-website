@@ -1,4 +1,4 @@
-/* ===== RESET & BASE ===== */
+/* ===== BASE ===== */
 * {
     margin: 0;
     padding: 0;
@@ -44,7 +44,7 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     background: linear-gradient(45deg, #3498db, #2ecc71);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -202,7 +202,7 @@ footer {
     text-align: center;
     margin-bottom: 40px;
     background: linear-gradient(45deg, #3498db, #2ecc71);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -244,13 +244,12 @@ footer {
     font-size: 0.85rem;
 }
 
-/* ===== ABOUT US - 4 MEMBERS IN A ROW ===== */
+/* ===== ABOUT US ===== */
 .about-grid {
     display: grid;
     gap: 30px;
 }
 
-/* Desktop: 4 columns - exactly 4 members in a row */
 .about-grid-4 {
     grid-template-columns: repeat(4, 1fr);
 }
@@ -516,7 +515,6 @@ footer {
 
 /* ===== RESPONSIVE ===== */
 
-/* Tablets: 2 columns */
 @media (max-width: 1024px) {
     .about-grid-4 {
         grid-template-columns: repeat(2, 1fr);
@@ -535,7 +533,6 @@ footer {
     }
 }
 
-/* Mobile: 1 column */
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -605,7 +602,7 @@ footer {
     }
 }
 
-/* ===== SCROLL ANIMATIONS ===== */
+/* ===== ANIMATIONS ===== */
 .section {
     opacity: 0;
     transform: translateY(50px);

@@ -1,11 +1,10 @@
-// ============================================
-// ECHOSPACE - 2 DIFFERENT ANIMATIONS
-// ============================================
+
+//  ANIMATIONS
 
 let time = 0;
 
 export function initAnimations(allObjects) {
-    // Animation 1: Rotation
+    // Rotation
     function animateRotation() {
         allObjects.forEach(obj => {
             if (obj.type === 'donut' && obj.mesh) {
@@ -32,7 +31,7 @@ export function initAnimations(allObjects) {
         });
     }
 
-    // Animation 2: Floating/Bouncing
+    // Floating
     function animateFloating() {
         time += 0.01;
         

@@ -1,15 +1,14 @@
-// ============================================
-// ECHOSPACE - LIGHTING (2 techniques)
-// ============================================
+
+// LIGHTING 
 
 import * as THREE from 'three';
 
 export function initLighting(scene) {
-    // Technique 1: Ambient Light
+    // Ambient Light
     const ambientLight = new THREE.AmbientLight(0x404060, 0.5);
     scene.add(ambientLight);
     
-    // Technique 2: Directional Light with Shadows
+    // Directional Light with Shadows
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
     directionalLight.position.set(5, 10, 7);
     directionalLight.castShadow = true;

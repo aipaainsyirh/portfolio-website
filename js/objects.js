@@ -1,6 +1,6 @@
-// ============================================
-// ECHOSPACE - 6 DIFFERENT 3D OBJECTS WITH TEXTURES
-// ============================================
+
+// 3D OBJECTS 
+
 
 import * as THREE from 'three';
 
@@ -8,9 +8,7 @@ import * as THREE from 'three';
 let allObjects = [];
 let allMeshes = [];
 
-// ============================================
-// TEXTURE GENERATION FUNCTIONS
-// ============================================
+// Texture
 
 function createTexture(colors) {
     const canvas = document.createElement('canvas');
@@ -115,9 +113,7 @@ function createRubikTexture() {
     return new THREE.CanvasTexture(canvas);
 }
 
-// ============================================
-// GALAXY BACKGROUND
-// ============================================
+
 
 function createGalaxyBackground(scene) {
     const starGeometry = new THREE.BufferGeometry();
@@ -203,14 +199,13 @@ function createGalaxyBackground(scene) {
     allObjects.push({ type: 'galaxy', stars, nebula });
 }
 
-// ============================================
-// OBJECT 1: AIRPLANE
-// ============================================
+
+// AIRPLANE
 
 function createAirplane(scene) {
     const group = new THREE.Group();
 
-    // Fuselage
+    
     const fuselageGeo = new THREE.CylinderGeometry(0.3, 0.3, 1.8, 8);
     const fuselageMat = new THREE.MeshPhysicalMaterial({
         map: createMetalTexture(),
@@ -223,7 +218,7 @@ function createAirplane(scene) {
     group.add(fuselage);
     allMeshes.push(fuselage);
 
-    // Wings
+    
     const wingGeo = new THREE.BoxGeometry(1.6, 0.05, 0.5);
     const wingMat = new THREE.MeshPhysicalMaterial({
         map: createTexture(['#3498db', '#2ecc71']),
@@ -236,7 +231,7 @@ function createAirplane(scene) {
     group.add(wing);
     allMeshes.push(wing);
 
-    // Tail
+    
     const tailGeo = new THREE.BoxGeometry(0.4, 0.3, 0.2);
     const tailMat = new THREE.MeshPhysicalMaterial({
         map: createTexture(['#e74c3c', '#f1c40f']),
@@ -248,7 +243,7 @@ function createAirplane(scene) {
     group.add(tail);
     allMeshes.push(tail);
 
-    // Wing tips
+
     const tipGeo = new THREE.BoxGeometry(0.4, 0.2, 0.1);
     const tipMat = new THREE.MeshPhysicalMaterial({
         map: createTexture(['#ff6b6b', '#ffd93d']),
@@ -273,9 +268,9 @@ function createAirplane(scene) {
     allObjects.push({ type: 'airplane', group });
 }
 
-// ============================================
-// OBJECT 2: RUBIK'S CUBE
-// ============================================
+
+// RUBICS CUBE
+
 
 function createRubiksCube(scene) {
     const group = new THREE.Group();
@@ -306,9 +301,9 @@ function createRubiksCube(scene) {
     allObjects.push({ type: 'rubik', group });
 }
 
-// ============================================
-// OBJECT 3: DONUT
-// ============================================
+
+// DONUT
+
 
 function createDonut(scene) {
     const geo = new THREE.TorusGeometry(0.8, 0.3, 16, 100);
@@ -329,9 +324,9 @@ function createDonut(scene) {
     allObjects.push({ type: 'donut', mesh });
 }
 
-// ============================================
-// OBJECT 4: PYRAMID
-// ============================================
+
+// PYRAMID
+
 
 function createPyramid(scene) {
     const geo = new THREE.ConeGeometry(0.8, 1.2, 4);
@@ -350,9 +345,9 @@ function createPyramid(scene) {
     allObjects.push({ type: 'pyramid', mesh });
 }
 
-// ============================================
-// OBJECT 5: CYLINDER
-// ============================================
+
+// CYLINDER
+
 
 function createCylinder(scene) {
     const geo = new THREE.CylinderGeometry(0.6, 0.6, 1.2, 32);
@@ -371,9 +366,9 @@ function createCylinder(scene) {
     allObjects.push({ type: 'cylinder', mesh });
 }
 
-// ============================================
-// OBJECT 6: SPHERE
-// ============================================
+
+// SPHERE
+
 
 function createSphere(scene) {
     const geo = new THREE.SphereGeometry(0.6, 32, 32);
@@ -392,9 +387,6 @@ function createSphere(scene) {
     allObjects.push({ type: 'sphere', mesh });
 }
 
-// ============================================
-// DECORATIVE RING
-// ============================================
 
 function createDecorativeRing(scene) {
     const geo = new THREE.TorusGeometry(0.9, 0.08, 16, 100);
@@ -413,9 +405,6 @@ function createDecorativeRing(scene) {
     allObjects.push({ type: 'ring', mesh });
 }
 
-// ============================================
-// EXPORT
-// ============================================
 
 export function createAllObjects(scene) {
     allObjects = [];

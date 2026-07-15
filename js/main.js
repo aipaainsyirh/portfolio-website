@@ -1,7 +1,3 @@
-// ============================================
-// ECHOSPACE - MAIN ENTRY POINT
-// NO FETCH - All content already in HTML
-// ============================================
 
 import { initScene } from './scene.js';
 import { initLighting } from './lighting.js';
@@ -10,9 +6,6 @@ import { initAnimations } from './animations.js';
 import { initInteractions } from './interactions.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-// ============================================
-// 1. CONTACT FORM HANDLER
-// ============================================
 
 function initContactForm() {
     const form = document.getElementById('contactForm');
@@ -37,7 +30,7 @@ function initContactForm() {
             formStatus.style.color = '#e74c3c';
             formStatus.style.background = 'rgba(231, 76, 60, 0.1)';
             formStatus.style.border = '1px solid #e74c3c';
-            formStatus.textContent = '❌ Please fill in all required fields.';
+            formStatus.textContent = 'Please fill in all required fields.';
         }
         
         setTimeout(() => {
@@ -47,10 +40,6 @@ function initContactForm() {
         }, 5000);
     });
 }
-
-// ============================================
-// 2. SCROLL ANIMATIONS
-// ============================================
 
 function initScrollAnimations() {
     const sections = document.querySelectorAll('.section');
@@ -64,10 +53,6 @@ function initScrollAnimations() {
 
     sections.forEach(section => observer.observe(section));
 }
-
-// ============================================
-// 3. MOBILE MENU
-// ============================================
 
 function initMobileMenu() {
     const hamburger = document.querySelector('.hamburger');
@@ -86,9 +71,8 @@ function initMobileMenu() {
     }
 }
 
-// ============================================
-// 4. THREE.JS INITIALIZATION
-// ============================================
+
+// THREE.JS INITIALIZATION
 
 function initThreeJS() {
     const { scene, camera, renderer } = initScene();
@@ -122,9 +106,6 @@ function initThreeJS() {
     };
 }
 
-// ============================================
-// 5. ANIMATION LOOP
-// ============================================
 
 let state = null;
 
@@ -141,9 +122,6 @@ function animate() {
     state.renderer.render(state.scene, state.camera);
 }
 
-// ============================================
-// 6. WINDOW RESIZE
-// ============================================
 
 function initResizeHandler(camera, renderer) {
     window.addEventListener('resize', () => {
@@ -156,9 +134,6 @@ function initResizeHandler(camera, renderer) {
     });
 }
 
-// ============================================
-// 7. INITIALIZATION
-// ============================================
 
 function init() {
     console.log('🚀 EchoSpace - Loading...');
@@ -171,10 +146,10 @@ function init() {
     // Initialize Three.js
     state = initThreeJS();
     
-    // Setup resize handler
+    // resize handler
     initResizeHandler(state.camera, state.renderer);
     
-    // Start animation loop
+    // animation loop
     animate();
     
     console.log('✅ EchoSpace - Ready!');
