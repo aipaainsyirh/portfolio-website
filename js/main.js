@@ -71,6 +71,72 @@ function initMobileMenu() {
     }
 }
 
+// Smooth scroll without hash - using scrollIntoView
+function initSmoothScroll() {
+    // Get all links that have data-section attribute
+    const allLinks = document.querySelectorAll('a[data-section]');
+    
+    allLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const sectionId = this.getAttribute('data-section');
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                // Get navbar height for offset
+                const navbar = document.querySelector('.navbar');
+                const navHeight = navbar ? navbar.offsetHeight : 70;
+                
+                // Use scrollIntoView with offset
+                const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-links a').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Close mobile menu if open
+                const navLinks = document.querySelector('.nav-links');
+                if (navLinks) {
+                    navLinks.classList.remove('active');
+                }
+            } else {
+                console.warn('Section not found:', sectionId);
+            }
+        });
+    });
+    
+    // Update active nav link on scroll
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const scrollPosition = window.pageYOffset + 150;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === sectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+}
+
 
 // THREE.JS INITIALIZATION
 
@@ -147,6 +213,7 @@ function init() {
     // Initialize UI components
     initScrollAnimations();
     initMobileMenu();
+    initSmoothScroll();
     initContactForm();
     
     // Initialize Three.js
