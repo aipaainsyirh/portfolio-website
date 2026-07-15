@@ -1,8 +1,8 @@
-// ============================================
-// ECHOSPACE - USER INTERACTIONS
+
+//INTERACTIONS
 // Mouse: Click, Hover, Right-click
 // Keyboard: Space, R, C, H
-// ============================================
+git 
 
 import * as THREE from 'three';
 
@@ -15,7 +15,7 @@ export function initInteractions(camera, renderer, meshes) {
     
     const clickableMeshes = meshes || [];
 
-    // ===== MOUSE CLICK: Change color =====
+    //  Change color 
     renderer.domElement.addEventListener('click', (event) => {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -38,7 +38,7 @@ export function initInteractions(camera, renderer, meshes) {
         }
     });
 
-    // ===== MOUSE HOVER: Highlight =====
+    
     renderer.domElement.addEventListener('mousemove', (event) => {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -69,7 +69,7 @@ export function initInteractions(camera, renderer, meshes) {
         }
     });
 
-    // ===== MOUSE RIGHT-CLICK: Reset color =====
+   
     renderer.domElement.addEventListener('contextmenu', (event) => {
         event.preventDefault();
         
@@ -82,17 +82,17 @@ export function initInteractions(camera, renderer, meshes) {
         if (intersects.length > 0) {
             const object = intersects[0].object;
             object.material.color.setHex(0xcccccc);
-            console.log(`↩️ Reset color`);
+            console.log(`Reset color`);
         }
     });
 
-    // ===== KEYBOARD INTERACTIONS =====
+    //KEYBOARD 
     window.addEventListener('keydown', (event) => {
         switch(event.key) {
             case ' ':
                 if (controlsRef) {
                     controlsRef.autoRotate = !controlsRef.autoRotate;
-                    console.log(`🔄 Auto-rotate: ${controlsRef.autoRotate ? 'ON' : 'OFF'}`);
+                    console.log(`Auto-rotate: ${controlsRef.autoRotate ? 'ON' : 'OFF'}`);
                 }
                 break;
                 
@@ -103,7 +103,7 @@ export function initInteractions(camera, renderer, meshes) {
                     controlsRef.target.set(0, 1.5, 0);
                     controlsRef.update();
                 }
-                console.log('📷 Camera reset!');
+                console.log('Camera reset!');
                 break;
                 
             case 'c':
@@ -137,7 +137,7 @@ export function initInteractions(camera, renderer, meshes) {
         }
     });
 
-    // Store controls reference
+    // Store controls
     return { 
         setControls: (controls) => { controlsRef = controls; },
         clickableMeshes 
