@@ -117,25 +117,26 @@ function createRubikTexture() {
 function createGalaxyBackground(scene) {
     // Main galaxy stars
     const starGeometry = new THREE.BufferGeometry();
-    const count = 25000;
+    const count = 30000;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
-        const radius = 50 + Math.random() * 50;
+        const radius = 50 + Math.random() * 60;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos((Math.random() * 2) - 1);
 
         positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.4;
         positions[i * 3 + 2] = radius * Math.cos(phi);
 
         const colorChoice = Math.random();
         let color;
-        if (colorChoice < 0.6) color = new THREE.Color(0xffffff);
-        else if (colorChoice < 0.8) color = new THREE.Color(0x88ccff);
-        else if (colorChoice < 0.92) color = new THREE.Color(0xffdd88);
-        else color = new THREE.Color(0xff8844);
+        if (colorChoice < 0.5) color = new THREE.Color(0xffffff);
+        else if (colorChoice < 0.7) color = new THREE.Color(0x88ccff);
+        else if (colorChoice < 0.85) color = new THREE.Color(0xffdd88);
+        else if (colorChoice < 0.95) color = new THREE.Color(0xff8844);
+        else color = new THREE.Color(0xff4466);
 
         colors[i * 3] = color.r;
         colors[i * 3 + 1] = color.g;
@@ -160,21 +161,21 @@ function createGalaxyBackground(scene) {
     
     // Nebula - colorful dust clouds
     const nebulaGeometry = new THREE.BufferGeometry();
-    const nebulaCount = 8000;
+    const nebulaCount = 10000;
     const nebulaPos = new Float32Array(nebulaCount * 3);
     const nebulaColors = new Float32Array(nebulaCount * 3);
 
     for (let i = 0; i < nebulaCount; i++) {
-        const radius = 30 + Math.random() * 40;
+        const radius = 30 + Math.random() * 45;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos((Math.random() * 2) - 1);
 
         nebulaPos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-        nebulaPos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        nebulaPos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.3;
         nebulaPos[i * 3 + 2] = radius * Math.cos(phi);
 
-        const hue = 0.7 + Math.random() * 0.25;
-        const color = new THREE.Color().setHSL(hue, 0.8, 0.15 + Math.random() * 0.2);
+        const hue = 0.6 + Math.random() * 0.35;
+        const color = new THREE.Color().setHSL(hue, 0.8, 0.12 + Math.random() * 0.18);
         nebulaColors[i * 3] = color.r;
         nebulaColors[i * 3 + 1] = color.g;
         nebulaColors[i * 3 + 2] = color.b;
@@ -184,7 +185,7 @@ function createGalaxyBackground(scene) {
     nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
 
     const nebulaMaterial = new THREE.PointsMaterial({
-        size: 0.5,
+        size: 0.6,
         vertexColors: true,
         transparent: true,
         opacity: 0.15,
@@ -198,7 +199,7 @@ function createGalaxyBackground(scene) {
     
     // Extra distant stars for depth
     const distantGeo = new THREE.BufferGeometry();
-    const distantCount = 5000;
+    const distantCount = 8000;
     const distantPos = new Float32Array(distantCount * 3);
     for (let i = 0; i < distantCount; i++) {
         const r = 100 + Math.random() * 80;
@@ -221,7 +222,35 @@ function createGalaxyBackground(scene) {
     const distantStars = new THREE.Points(distantGeo, distantMat);
     scene.add(distantStars);
     
-    allObjects.push({ type: 'galaxy', stars, nebula, distantStars });
+    // Twinkling stars (smaller, brighter)
+    const twinkleGeo = new THREE.BufferGeometry();
+    const twinkleCount = 5000;
+    const twinklePos = new Float32Array(twinkleCount * 3);
+    const twinkleSizes = new Float32Array(twinkleCount);
+    for (let i = 0; i < twinkleCount; i++) {
+        const r = 60 + Math.random() * 50;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        twinklePos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+        twinklePos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.3;
+        twinklePos[i * 3 + 2] = r * Math.cos(phi);
+        twinkleSizes[i] = 0.05 + Math.random() * 0.2;
+    }
+    twinkleGeo.setAttribute('position', new THREE.BufferAttribute(twinklePos, 3));
+    twinkleGeo.setAttribute('size', new THREE.BufferAttribute(twinkleSizes, 1));
+    const twinkleMat = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 0.1,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        sizeAttenuation: true
+    });
+    const twinkleStars = new THREE.Points(twinkleGeo, twinkleMat);
+    scene.add(twinkleStars);
+    
+    allObjects.push({ type: 'galaxy', stars, nebula, distantStars, twinkleStars });
 }
 
 

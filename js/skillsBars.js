@@ -45,41 +45,167 @@ const memberColors = [
     0xf1c40f  // gold
 ];
 
-let hoveredBar = null;
+// Shape types for variety
+const shapeTypes = ['sphere', 'octahedron', 'dodecahedron', 'torus', 'cone'];
+
+let hoveredObject = null;
+
+// Create galaxy background for skills section
+function createGalaxyBackground(scene) {
+    // Main galaxy stars
+    const starGeometry = new THREE.BufferGeometry();
+    const count = 10000;
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+
+    for (let i = 0; i < count; i++) {
+        const radius = 20 + Math.random() * 35;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+
+        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.5;
+        positions[i * 3 + 2] = radius * Math.cos(phi);
+
+        const colorChoice = Math.random();
+        let color;
+        if (colorChoice < 0.6) color = new THREE.Color(0xffffff);
+        else if (colorChoice < 0.8) color = new THREE.Color(0x88ccff);
+        else if (colorChoice < 0.92) color = new THREE.Color(0xffdd88);
+        else color = new THREE.Color(0xff8844);
+
+        colors[i * 3] = color.r;
+        colors[i * 3 + 1] = color.g;
+        colors[i * 3 + 2] = color.b;
+    }
+
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const starMaterial = new THREE.PointsMaterial({
+        size: 0.08,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true,
+        depthWrite: false
+    });
+
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+    
+    // Nebula - colorful dust clouds
+    const nebulaGeometry = new THREE.BufferGeometry();
+    const nebulaCount = 4000;
+    const nebulaPos = new Float32Array(nebulaCount * 3);
+    const nebulaColors = new Float32Array(nebulaCount * 3);
+
+    for (let i = 0; i < nebulaCount; i++) {
+        const radius = 12 + Math.random() * 28;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+
+        nebulaPos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        nebulaPos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.4;
+        nebulaPos[i * 3 + 2] = radius * Math.cos(phi);
+
+        const hue = 0.6 + Math.random() * 0.35;
+        const color = new THREE.Color().setHSL(hue, 0.8, 0.12 + Math.random() * 0.15);
+        nebulaColors[i * 3] = color.r;
+        nebulaColors[i * 3 + 1] = color.g;
+        nebulaColors[i * 3 + 2] = color.b;
+    }
+
+    nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
+    nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(nebulaColors, 3));
+
+    const nebulaMaterial = new THREE.PointsMaterial({
+        size: 0.35,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.12,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true,
+        depthWrite: false
+    });
+
+    const nebula = new THREE.Points(nebulaGeometry, nebulaMaterial);
+    scene.add(nebula);
+    
+    // Extra distant stars for depth
+    const distantGeo = new THREE.BufferGeometry();
+    const distantCount = 3000;
+    const distantPos = new Float32Array(distantCount * 3);
+    for (let i = 0; i < distantCount; i++) {
+        const r = 45 + Math.random() * 40;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        distantPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+        distantPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.3;
+        distantPos[i * 3 + 2] = r * Math.cos(phi);
+    }
+    distantGeo.setAttribute('position', new THREE.BufferAttribute(distantPos, 3));
+    const distantMat = new THREE.PointsMaterial({
+        color: 0x88aaff,
+        size: 0.12,
+        transparent: true,
+        opacity: 0.25,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        sizeAttenuation: true
+    });
+    const distantStars = new THREE.Points(distantGeo, distantMat);
+    scene.add(distantStars);
+    
+    return { stars, nebula, distantStars };
+}
 
 export function createSkillsBars(container) {
     // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 50);
-    camera.position.set(0, 4, 10);
+    scene.background = new THREE.Color(0x0a0a0a);
+    
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(0, 4, 12);
     camera.lookAt(0, 1.5, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x0a0a0a, 1);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Lights
-    const ambient = new THREE.AmbientLight(0x446688, 0.6);
-    scene.add(ambient);
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    dirLight.position.set(5, 10, 7);
-    scene.add(dirLight);
-    const backLight = new THREE.DirectionalLight(0x4488ff, 0.5);
-    backLight.position.set(-5, 2, -5);
-    scene.add(backLight);
+    // Add galaxy background
+    const galaxy = createGalaxyBackground(scene);
 
-    // Group for all bars
+    // Lights - brighter
+    const ambient = new THREE.AmbientLight(0x6688aa, 0.7);
+    scene.add(ambient);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    dirLight.position.set(8, 12, 10);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+    const backLight = new THREE.DirectionalLight(0x4488ff, 0.8);
+    backLight.position.set(-5, 3, -8);
+    scene.add(backLight);
+    const rimLight = new THREE.DirectionalLight(0x88ccff, 0.6);
+    rimLight.position.set(0, -3, 10);
+    scene.add(rimLight);
+    const fillLight = new THREE.DirectionalLight(0x88aaff, 0.5);
+    fillLight.position.set(-3, 5, 5);
+    scene.add(fillLight);
+
+    // Group for all objects
     const group = new THREE.Group();
     scene.add(group);
 
-    const bars = [];
-    const barWidth = 0.5;
-    const barDepth = 0.5;
-    const spacingX = 1.7;
-    const spacingZ = 2.0;
-    const maxHeight = 3.0;
+    const objects = [];
+    const spacingX = 1.8;
+    const spacingZ = 2.2;
+    const maxScale = 1.2;
 
     // Flatten all skills with member info
     const allSkills = [];
@@ -95,7 +221,7 @@ export function createSkillsBars(container) {
         });
     });
 
-    // Arrange in grid: 4 columns x 5 rows (20 bars)
+    // Arrange in grid: 4 columns x 5 rows (20 objects)
     const cols = 4;
     const rows = 5;
     allSkills.forEach((item, i) => {
@@ -104,52 +230,126 @@ export function createSkillsBars(container) {
         const x = (col - (cols - 1) / 2) * spacingX;
         const z = (row - (rows - 1) / 2) * spacingZ;
 
-        const height = (item.level / 10) * maxHeight;
-        const geometry = new THREE.BoxGeometry(barWidth, height, barDepth);
-        const material = new THREE.MeshStandardMaterial({
-            color: item.color,
-            emissive: item.color,
+        const scale = 0.3 + (item.level / 10) * maxScale;
+        const shapeType = shapeTypes[i % shapeTypes.length];
+        
+        let geometry, mesh;
+        const color = new THREE.Color(item.color);
+        
+        switch(shapeType) {
+            case 'sphere':
+                geometry = new THREE.SphereGeometry(0.45, 32, 32);
+                break;
+            case 'octahedron':
+                geometry = new THREE.OctahedronGeometry(0.5);
+                break;
+            case 'dodecahedron':
+                geometry = new THREE.DodecahedronGeometry(0.48);
+                break;
+            case 'torus':
+                geometry = new THREE.TorusGeometry(0.4, 0.15, 16, 32);
+                break;
+            case 'cone':
+                geometry = new THREE.ConeGeometry(0.4, 0.7, 8);
+                break;
+            default:
+                geometry = new THREE.SphereGeometry(0.45, 32, 32);
+        }
+
+        const material = new THREE.MeshPhysicalMaterial({
+            color: color,
+            emissive: color,
             emissiveIntensity: 0.15,
-            roughness: 0.3,
-            metalness: 0.1,
+            metalness: 0.3,
+            roughness: 0.25,
+            clearcoat: 0.3,
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.92,
         });
-        const bar = new THREE.Mesh(geometry, material);
-        bar.position.set(x, height / 2, z);
-        bar.userData = {
+
+        mesh = new THREE.Mesh(geometry, material);
+        mesh.scale.set(scale, scale, scale);
+        mesh.position.set(x, 0.6 + scale * 0.4, z);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        
+        mesh.userData = {
             skillName: item.skillName,
             member: item.member,
             level: item.level,
             color: item.color,
-            originalHeight: height
+            shapeType: shapeType,
+            originalScale: scale,
+            originalY: 0.6 + scale * 0.4
         };
-        group.add(bar);
-        bars.push(bar);
+        
+        group.add(mesh);
+        objects.push(mesh);
 
-        // Add label outline (thin border)
-        const edgeGeo = new THREE.EdgesGeometry(geometry);
-        const edgeMat = new THREE.LineBasicMaterial({
+        // Add glow ring under each object - brighter
+        const ringGeo = new THREE.RingGeometry(0.3, 0.55, 32);
+        const ringMat = new THREE.MeshBasicMaterial({
+            color: item.color,
+            transparent: true,
+            opacity: 0.25,
+            side: THREE.DoubleSide,
+            depthWrite: false
+        });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.set(x, 0.05, z);
+        ring.scale.set(scale * 1.3, scale * 1.3, scale * 1.3);
+        group.add(ring);
+
+        // Add small orbiting particles around each object
+        const particleCount = 8;
+        const particleGeo = new THREE.BufferGeometry();
+        const particlePos = new Float32Array(particleCount * 3);
+        for (let p = 0; p < particleCount; p++) {
+            const angle = (p / particleCount) * Math.PI * 2;
+            const radius = 0.6 + scale * 0.2;
+            particlePos[p * 3] = Math.cos(angle) * radius;
+            particlePos[p * 3 + 1] = Math.sin(angle * 2) * 0.1;
+            particlePos[p * 3 + 2] = Math.sin(angle) * radius;
+        }
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: item.color,
+            size: 0.05,
+            transparent: true,
+            opacity: 0.5,
+            blending: THREE.AdditiveBlending
+        });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        particles.position.copy(mesh.position);
+        particles.userData.parentIndex = i;
+        group.add(particles);
+        mesh.userData.particles = particles;
+
+        // Add small label above each object (3D text alternative - small glowing dot)
+        const labelDotGeo = new THREE.SphereGeometry(0.03, 8, 8);
+        const labelDotMat = new THREE.MeshBasicMaterial({
             color: 0x88ccff,
             transparent: true,
-            opacity: 0.2
+            opacity: 0.3
         });
-        const edge = new THREE.LineSegments(edgeGeo, edgeMat);
-        edge.position.copy(bar.position);
-        group.add(edge);
+        const labelDot = new THREE.Mesh(labelDotGeo, labelDotMat);
+        labelDot.position.set(x, 0.6 + scale * 0.4 + scale * 0.6, z);
+        group.add(labelDot);
     });
 
-    // Add floor grid rings
-    const ringMat = new THREE.MeshBasicMaterial({
+    // Add decorative floating rings around the whole group - brighter
+    const ringMat2 = new THREE.MeshBasicMaterial({
         color: 0x3498db,
         transparent: true,
-        opacity: 0.06,
-        wireframe: true
+        opacity: 0.08,
+        wireframe: true,
+        side: THREE.DoubleSide
     });
-    for (let i = 0; i < 3; i++) {
-        const ring = new THREE.Mesh(new THREE.RingGeometry(1.5 + i * 1.8, 1.7 + i * 1.8, 32), ringMat);
-        ring.rotation.x = -Math.PI / 2;
-        ring.position.y = 0.01;
+    for (let i = 0; i < 2; i++) {
+        const ring = new THREE.Mesh(new THREE.RingGeometry(2 + i * 2, 2.2 + i * 2, 48), ringMat2);
+        ring.rotation.x = -Math.PI / 2 + (i * 0.1);
+        ring.position.y = 0.02;
         group.add(ring);
     }
 
@@ -169,7 +369,8 @@ export function createSkillsBars(container) {
     // Raycaster for hover
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
-    const detailEl = document.getElementById('skill-detail') || document.getElementById('skill-info');
+    const detailEl = document.getElementById('skill-detail');
+    const infoEl = document.getElementById('skill-info');
 
     function onMouseMove(event) {
         const rect = renderer.domElement.getBoundingClientRect();
@@ -177,41 +378,61 @@ export function createSkillsBars(container) {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
         
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(bars);
+        const intersects = raycaster.intersectObjects(objects);
         
         // Reset previous hover
-        if (hoveredBar) {
-            hoveredBar.material.emissiveIntensity = 0.15;
-            hoveredBar.scale.set(1, 1, 1);
-            hoveredBar = null;
+        if (hoveredObject) {
+            hoveredObject.material.emissiveIntensity = 0.15;
+            const s = hoveredObject.userData.originalScale;
+            hoveredObject.scale.set(s, s, s);
+            hoveredObject = null;
         }
         
         if (intersects.length > 0) {
-            const bar = intersects[0].object;
-            hoveredBar = bar;
-            bar.material.emissiveIntensity = 0.6;
-            bar.scale.set(1.05, 1, 1.05);
+            const obj = intersects[0].object;
+            hoveredObject = obj;
+            obj.material.emissiveIntensity = 0.7;
+            const s = obj.userData.originalScale * 1.15;
+            obj.scale.set(s, s, s);
             
-            const data = bar.userData;
+            const data = obj.userData;
             if (detailEl) {
+                const colorStyle = new THREE.Color(data.color).getStyle();
+                const shapeIcons = {
+                    'sphere': '⚪',
+                    'octahedron': '🔶',
+                    'dodecahedron': '🔷',
+                    'torus': '⭕',
+                    'cone': '🔺'
+                };
                 detailEl.innerHTML = `
-                    <div style="background:rgba(0,0,0,0.6);padding:12px 16px;border-radius:10px;border:1px solid ${new THREE.Color(data.color).getStyle()};">
-                        <strong style="color:#fff;font-size:1.1rem;">${data.skillName}</strong><br>
-                        <span style="color:${new THREE.Color(data.color).getStyle()};">👤 ${data.member}</span><br>
-                        <span style="color:#88ccff;">Level: ${data.level}/10</span>
-                        <div style="width:100%;height:4px;background:#222;border-radius:4px;margin-top:6px;">
-                            <div style="width:${data.level * 10}%;height:100%;background:${new THREE.Color(data.color).getStyle()};border-radius:4px;"></div>
+                    <div style="background:rgba(0,0,0,0.8);padding:14px 20px;border-radius:12px;border:2px solid ${colorStyle};backdrop-filter:blur(5px);">
+                        <div style="font-size:1.3rem;margin-bottom:2px;">
+                            ${shapeIcons[data.shapeType] || '💎'} 
+                            <strong style="color:#ffffff;">${data.skillName}</strong>
                         </div>
+                        <div style="color:${colorStyle};font-weight:600;">👤 ${data.member}</div>
+                        <div style="color:#88ccff;margin-top:2px;">Level: ${data.level}/10</div>
+                        <div style="width:100%;height:6px;background:rgba(255,255,255,0.1);border-radius:4px;margin-top:6px;overflow:hidden;">
+                            <div style="width:${data.level * 10}%;height:100%;background:${colorStyle};border-radius:4px;transition:width 0.3s;"></div>
+                        </div>
+                        <div style="font-size:0.65rem;color:#888;margin-top:4px;text-transform:capitalize;">${data.shapeType}</div>
                     </div>
                 `;
             }
+            // Keep the info text visible but with a subtle change
+            if (infoEl) {
+                infoEl.style.opacity = '0.6';
+                infoEl.style.transform = 'scale(0.98)';
+            }
             renderer.domElement.style.cursor = 'pointer';
         } else {
-            if (detailEl && !detailEl.querySelector('h3')) {
-                detailEl.innerHTML = `
-                    <h3 style="color:#3498db;">🎯 Hover over the 3D bars!</h3>
-                    <p style="color:#b0b0b0;">Each bar represents a different skill level</p>
-                `;
+            if (detailEl) {
+                detailEl.innerHTML = '';
+            }
+            if (infoEl) {
+                infoEl.style.opacity = '1';
+                infoEl.style.transform = 'scale(1)';
             }
             renderer.domElement.style.cursor = 'default';
         }
@@ -219,16 +440,18 @@ export function createSkillsBars(container) {
 
     renderer.domElement.addEventListener('mousemove', onMouseMove);
     renderer.domElement.addEventListener('mouseleave', () => {
-        if (hoveredBar) {
-            hoveredBar.material.emissiveIntensity = 0.15;
-            hoveredBar.scale.set(1, 1, 1);
-            hoveredBar = null;
+        if (hoveredObject) {
+            hoveredObject.material.emissiveIntensity = 0.15;
+            const s = hoveredObject.userData.originalScale;
+            hoveredObject.scale.set(s, s, s);
+            hoveredObject = null;
         }
         if (detailEl) {
-            detailEl.innerHTML = `
-                <h3 style="color:#3498db;">🎯 Hover over the 3D bars!</h3>
-                <p style="color:#b0b0b0;">Each bar represents a different skill level</p>
-            `;
+            detailEl.innerHTML = '';
+        }
+        if (infoEl) {
+            infoEl.style.opacity = '1';
+            infoEl.style.transform = 'scale(1)';
         }
     });
 
@@ -248,21 +471,58 @@ export function createSkillsBars(container) {
     let time = 0;
     function animateSkills() {
         requestAnimationFrame(animateSkills);
-        time += 0.005;
+        time += 0.01;
         
         controls.update();
         
-        // Gentle floating animation for bars
-        bars.forEach((bar, i) => {
-            const offset = i * 0.3;
-            const floatHeight = Math.sin(time * 0.5 + offset) * 0.08;
-            const originalY = bar.userData.originalHeight / 2;
-            bar.position.y = originalY + floatHeight;
+        // Rotate galaxy background slowly
+        if (galaxy.stars) galaxy.stars.rotation.y += 0.0003;
+        if (galaxy.nebula) galaxy.nebula.rotation.y += 0.0005;
+        if (galaxy.distantStars) galaxy.distantStars.rotation.y += 0.0002;
+        
+        // Animate each object
+        objects.forEach((obj, i) => {
+            const offset = i * 0.2;
+            // Floating
+            const floatY = Math.sin(time * 0.6 + offset) * 0.15;
+            obj.position.y = obj.userData.originalY + floatY;
+            
+            // Rotation - different for each shape
+            if (obj.userData.shapeType === 'sphere') {
+                obj.rotation.x += 0.01;
+                obj.rotation.y += 0.015;
+            } else if (obj.userData.shapeType === 'octahedron') {
+                obj.rotation.y += 0.02;
+                obj.rotation.z += 0.005;
+            } else if (obj.userData.shapeType === 'dodecahedron') {
+                obj.rotation.x += 0.008;
+                obj.rotation.y += 0.012;
+            } else if (obj.userData.shapeType === 'torus') {
+                obj.rotation.x += 0.015;
+                obj.rotation.y += 0.01;
+            } else if (obj.userData.shapeType === 'cone') {
+                obj.rotation.y += 0.02;
+            }
+            
+            // Animate particles
+            if (obj.userData.particles) {
+                const particles = obj.userData.particles;
+                const positions = particles.geometry.attributes.position.array;
+                for (let p = 0; p < positions.length / 3; p++) {
+                    const angle = (p / (positions.length / 3)) * Math.PI * 2 + time * 0.5 + i * 0.1;
+                    const radius = 0.6 + obj.userData.originalScale * 0.2;
+                    positions[p * 3] = Math.cos(angle) * radius;
+                    positions[p * 3 + 1] = Math.sin(angle * 2 + time * 0.3) * 0.15;
+                    positions[p * 3 + 2] = Math.sin(angle) * radius;
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+                particles.position.y = obj.position.y;
+            }
         });
         
         renderer.render(scene, camera);
     }
     animateSkills();
 
-    return { scene, camera, renderer, controls, bars, skillData };
+    return { scene, camera, renderer, controls, objects, skillData };
 }

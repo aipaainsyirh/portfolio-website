@@ -94,7 +94,7 @@ function initThreeJS() {
     const interactionState = initInteractions(camera, renderer, allMeshes);
     const animationState = initAnimations(allObjects);
     
-    // Initialize skills bars in the skills section
+    // Initialize skills bars in the skills section with its own galaxy
     const skillsContainer = document.getElementById('skills-3d');
     if (skillsContainer) {
         createSkillsBars(skillsContainer);
